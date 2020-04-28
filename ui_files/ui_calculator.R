@@ -9,7 +9,7 @@ ui.calculator <- function() {
              
               box(h4(strong("Step 1: PROJECT INFORMATION"),
                      tags$style(type = "text/css", "#q_step1 {vertical-align: top;}"),
-                     bsButton("q_step1", label = "", icon = icon("question"), style = "info", size = "extra-small")
+                     bsButton("q_step1", label = "", icon = icon("question-circle"), style = "color: #1f93d0; info", size = "extra-small")
               ),
               
               bsPopover(id = "q_step1", title = "Project Information",

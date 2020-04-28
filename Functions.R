@@ -20,6 +20,9 @@ library(formattable)
 #Piping/operators which promote semantics
 library(magrittr)
 library(dplyr)
+library(tidyr)
+library(tidyverse)
+library(glue)
 
 #Plotting
 library(ggplot2)

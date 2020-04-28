@@ -22,7 +22,7 @@ source(file.path("ui_files", "ui_manual.R"), local = TRUE, echo = FALSE, chdir =
 
 
 ##########DEFINE####################
-title0<-"Shiny Template 2020"
+title0<-" | Shiny Template "
 require.login<-T 
 
 user_base <- data_frame(
@@ -35,7 +35,8 @@ user_base <- data_frame(
 
 ##########ui - USER INTERFACE###########
 # Define UI for application that draws a histogram
-ui <- dashboardPage(
+ui <- tagList(
+  dashboardPage(skin = "black",
 
   #####* Title######
   title = tags$head(tags$title(paste0("NOAA Fisheries ",title0," | NOAA Fisheries")), 
@@ -44,31 +45,94 @@ ui <- dashboardPage(
                               type="image/vnd.microsoft.icon")), 
   
   #####* Header######
+  # toolong<-function(text, MinLineLength, break0){
+  #   if (nchar(text)>MinLineLength) {
+  #     text0<-c()
+  #     text00<-strsplit(x = text, split = " ")[[1]]
+  #     
+  #     # for (i in 1:ceiling(x = nchar(text)/MinLineLength)) {
+  #     #   text0<-c(text0, 
+  #     #            [grep(pattern = " ",  
+  #     #                 x = substr(x = text, start = i, stop = i+MinLineLength))])
+  #     # } 
+  #   } else {
+  #     text0<-text
+  #   }
+  #   return(text)
+  # }
+  
   header = dashboardHeader(title = 
                              tags$a(href = 'https://www.fisheries.noaa.gov/',
-                                    tags$img(src="FISHERIES-Logo WEB ONLY.png", width = '35%'), 
-                                    title0, 
-                                    style = paste0("color: ", NOAAFisheries.Colors$Oceans$`White`, "; font-weight:bold")
+                                    tags$img(src="FISHERIES-Logo WEB ONLY.png", width = '130'), 
+                                    HTML(title0), 
+                                    style = paste0("text-align: right; 
+                                    color: #10497e; 
+                                    font-weight: bold; 
+                                    font-size: 20px;
+                                    font-family:'Arial Narrow';")
                                     ), 
-                           titleWidth = nchar(title0)*15,
+                           titleWidth = nchar(title0)*17,
+
+
+                           
                            
                            #For login
                            tags$li(class = "dropdown", 
-                                   style = paste0("color: ", NOAAFisheries.Colors$Crustacean$`PMS 151`, " ; padding: 8px;"),
-                                   shinyauthr::logoutUI("logout")),
+                                   style = paste0("padding: 8px;"),
+                                   shinyauthr::logoutUI("logout", class = "btn-primary", 
+                                                        style = "background-color: #1f93d0; border: none; color: #ffffff")),
+                           
+                           
+                           #Other Icons
+
+                           
+                            dropdownMenu(
+                             tags$li(tags$style(HTML('color: #10497e;}'))),                          
+                             type = "notifications",
+                             icon = icon("question-circle"),
+                             # icon = tags$a(icon("question-circle")#,
+                             #               # href = "https://github.com/emilyhmarkowitz/ShinyTemplateNMFS",
+                             #               # title = "Also see:",
+                             #               # style = "color: #1f93d0;"
+                             #               ),
+                             badgeStatus = NULL,
+                             headerText = "See also:",
+                             # style = "color: #1f93d0;")
+                             notificationItem("shiny", icon = icon("file"), status = "info",
+                                              href = "http://shiny.rstudio.com/"),
+                             notificationItem("shinydashboard", icon = icon("file"), status = "info",
+                                              href = "https://rstudio.github.io/shinydashboard/")
+                           ),
+                           # tags$li(class = "dropdown",
+                           #         tags$a(icon("question-circle"),
+                           #                href = "https://rstudio.github.io/shinydashboard/",
+                           #                title = "Also see:",
+                           #                style = "color: #1f93d0;")),
+                           
+                           
+                           
                            tags$li(class = "dropdown", 
                                    tags$a(icon("github"), 
                                           href = "https://github.com/emilyhmarkowitz/ShinyTemplateNMFS",
-                                          title = "See the code on github"))
+                                          title = "See the code on github", 
+                                          style = "color: #1f93d0;"))
                            ), 
   
   #####* Sidebar######
   sidebar = dashboardSidebar(
     collapsed = TRUE, 
-    width = nchar(title0)*15, 
+    width = nchar(title0)*17, 
     
     #Login
-    div(textOutput("welcome"), style = "padding: 20px"), # for Login
+    div(textOutput("welcome"), 
+        style = 
+        "padding-top: 40px; 
+         padding-bottom: 20px; 
+          text-align:center; 
+        color: #10497e; 
+        font-weight: bold; 
+        font-size: 20px;
+        font-family:'Arial Narrow';"), # for Login
     
     sidebarMenu(
       id = "tabs",
@@ -85,7 +149,10 @@ ui <- dashboardPage(
       menuItem("Licencing", 
                tabName = "licencing", icon = icon("list-alt")),
       menuItem("Manual", 
-               tabName = "manual", icon = icon("book"))
+               tabName = "manual", icon = icon("book"),
+               menuSubItem("Sub Menu Item 1", tabName = "sub_1"), 
+               menuSubItem("Sub Menu Item 2", tabName = "sub_2")
+      )
     )
   ),
   
@@ -93,7 +160,9 @@ ui <- dashboardPage(
   body = dashboardBody(
     
     shinyjs::useShinyjs(),
-    
+    tags$head(tags$style(HTML('
+      .main-header .sidebar-toggle:before {
+                              color: #10497e;}'))),
     tags$head(tags$style(".table{margin: 0 auto;}"),
               tags$script(src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.5.16/iframeResizer.contentWindow.min.js",
                           type="text/javascript"),
@@ -106,65 +175,80 @@ ui <- dashboardPage(
     # tags$head(
      tags$style(HTML('
     /* logo */
-      .skin-blue .main-header .logo {
-        background-color: #0055A4;
+      .skin-black .main-header .logo {
+        background-color: #ffffff;
+        height: 65px;
       }
 
       /* logo when hovered */
-      .skin-blue .main-header .logo:hover {
-        background-color: #0055A4;
+      .skin-black .main-header .logo:hover {
+        background-color: #ffffff;
+          color: #000000;
       }
 
       /* navbar (rest of the header) */
-      .skin-blue .main-header .navbar {
-        background-color: #0055A4;
+      .skin-black .main-header .navbar {
+      background-image: linear-gradient(to right, #ffffff , #d9effa);
+          color: #000000;
       }
 
       /* main sidebar */
-      .skin-blue .main-sidebar {
-        background-color: #00467F;
+      .skin-black .main-sidebar {
+        background-color: #d9effa;
       }
 
       /* active selected tab in the sidebarmenu */
-      .skin-blue .main-sidebar .sidebar .sidebar-menu .active a{
-        background-color: #0055A4;
+      .skin-black .main-sidebar .sidebar .sidebar-menu .active a{
+        background-color: #1f93d0;
+          color: #ffffff ;
       }
 
       /* other links in the sidebarmenu */
-      .skin-blue .main-sidebar .sidebar .sidebar-menu a{
-        background-color: #00467F;
-          color: #FFFFFF;
+      .skin-black .main-sidebar .sidebar .sidebar-menu a{
+        background-color: #d9effa;
+          color: #10497e;
       }
 
       /* other links in the sidebarmenu when hovered */
-      .skin-blue .main-sidebar .sidebar .sidebar-menu a:hover{
-        background-color: #00467F;
+      .skin-black .main-sidebar .sidebar .sidebar-menu a:hover{
+        background-color: #1f93d0;
+          color: #ffffff;
       }
 
       /* toggle button when hovered  */
-      .skin-blue .main-header .navbar .sidebar-toggle:hover{
-        background-color: #00467F;
+      .skin-black .main-header .navbar .sidebar-toggle:hover{
+        background-color: #1f93d0;
+          color: #10497e;
       }
 
       /* body */
       .content-wrapper, .right-side {
-        background-color: #E8E8E8;
+        background-color: #ffffff;
+          color: #000000;
+
       }
 
       .content-wrapper,
       .right-side {
       background-color: #ffffff;
+          color: #000000;
+      padding: 30px;
       }
 
      .content-wrapper {
-     background-color: #E8E8E8 !important;
+     background-color: #ffffff !important;
+          color: #000000;
      }
 
-      div {
-           padding-left: 5px;
-      }
+
 
                                     '))),
+    # div {
+    #   padding-left: 5px;
+    #   padding-top: 10px;
+    # }
+    
+    
     #Login
     shinyauthr::loginUI("login"),
     uiOutput("user_table"),
@@ -182,7 +266,24 @@ ui <- dashboardPage(
       ui.licencing(),       # Export Predictions
       ui.manual()        # Manual
     )
-  )
+  )), 
+  
+  #####* Footer######
+  
+  tags$footer("U.S. Department of Commerce | National Oceanic and Atmospheric Administration | National Marine Fisheries Service", 
+              align = "center", 
+              style = "
+              position:absolute;
+              bottom:0;
+              width:100%;
+              height:60px;   /* Height of the footer */
+              color: #10497e; 
+              font-size: 15px;
+              font-family:'Arial Narrow';
+              padding: 10px;
+              background-color: #ffffff;
+              z-index: 1000;
+              ")
   
 )
 

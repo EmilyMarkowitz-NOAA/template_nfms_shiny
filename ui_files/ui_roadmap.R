@@ -20,12 +20,11 @@ ui.roadmap <- function() {
         br(), 
         pre("Text ‘as is’ in a fixed width font."), 
         br(), 
-        img(src="noaa_logo.png", width = '8%'), 
+        img(src="FISHERIES-Logo WEB ONLY.png", width = '35%'), 
         br(),
-        a(href = 'https://www.fisheries.noaa.gov/', "link to NOAA")
+        a(href = 'https://www.fisheries.noaa.gov/', "link to NOAA Fisheries")
 
       )
-      
 
   )
 }
