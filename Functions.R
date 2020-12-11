@@ -1,11 +1,15 @@
 
 ###########PACKAGES###################
+library(devtools)
+
 # Need for running Shiny apps
 library(shiny)
 
 # Design
 library(shinydashboard)
 library(shinythemes)
+# devtools::install_github("paulc91/shinyauthr")
+library(shinyauthr)
 
 # Use Java Script
 library(shinyjs)

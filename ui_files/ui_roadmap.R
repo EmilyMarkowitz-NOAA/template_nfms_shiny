@@ -5,7 +5,7 @@ ui.roadmap <- function() {
       HTML("<html lang='en'>"), #Always have this as your first line
 
       
-      HTML("<h1>Hi this is heading<span class='glyphicon glyphicon-star'></span> Star</h1>")
+      HTML("<h1>Hi this is heading<span class='glyphicon glyphicon-star'></span> Star</h1>"),
         h1("First level title"),
         h2("Second level title"),
         h3("Third level title"),
@@ -18,7 +18,7 @@ ui.roadmap <- function() {
         br(), 
         em("This is italic text."), 
         br(), 
-        code("2 <- 1 + 1"), 
+        code("A <- 1 + 1"), 
         br(), 
         pre("Text ‘as is’ in a fixed width font."), 
         br(), 

@@ -25,7 +25,7 @@ source(file.path("ui_files", "ui_manual.R"), local = TRUE, echo = FALSE, chdir =
 title0<-" | Shiny Template "
 require.login<-T 
 
-user_base <- data_frame(
+user_base <- tibble(
   user = c("user1", "user2"),
   password = c("pass1", "pass2"), 
   password_hash = sapply(c("pass1", "pass2"), sodium::password_store), 
