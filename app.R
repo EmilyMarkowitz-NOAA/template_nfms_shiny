@@ -141,11 +141,11 @@ ui <- tagList(
       menuItem(HTML(paste0("Roadmap")),
                tabName = "roadmap", icon = icon("road")), #icon("sitemap")
       menuItem("Import Data", 
-               tabName = "import", icon = icon("cloud-upload")),
+               tabName = "import", icon = icon("cloud-upload-alt")),
       menuItem("Calculator", 
                tabName = "calculator", icon = icon("cogs")),
       menuItem("Plots", 
-               tabName = "plots", icon = icon("file-image-o")),
+               tabName = "plots", icon = icon("file-image")),
       menuItem("Licencing", 
                tabName = "licencing", icon = icon("list-alt")),
       menuItem("Manual", 
@@ -296,14 +296,14 @@ server <- function(input, output, session) {
   
  #######* Login######## 
   
-  credentials <- callModule(shinyauthr::login, "login", 
+  credentials <- shinyauthr::loginServer("login", 
                             data = user_base,
                             user_col = user,
                             pwd_col = password_hash,
                             sodium_hashed = TRUE,
                             log_out = reactive(logout_init()))
   
-  logout_init <- callModule(shinyauthr::logout, "logout", reactive(credentials()$user_auth))
+  logout_init <- shinyauthr::logoutServer("logout", reactive(credentials()$user_auth))
   
   observe({
     if(credentials()$user_auth) {
